@@ -1,3 +1,8 @@
 <Solution>
-  <Project Path="UserAPI/UserAPI.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/User.API/User.API.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/User.Tests/User.API.Tests.csproj" Id="ee5e12b5-71f5-4132-b589-49780938b9f6" />
+  </Folder>
 </Solution>
