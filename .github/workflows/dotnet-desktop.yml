@@ -28,4 +28,4 @@ jobs:
       run: dotnet build ContinuousIntegration.slnx --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test ContinuousIntegration.slnx --no-build --verbosity normal
+      run: dotnet test ContinuousIntegration.sln --no-build --verbosity normal
