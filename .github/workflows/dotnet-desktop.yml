@@ -22,10 +22,10 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: dotnet restore ContinuousIntegration.sln
+      run: dotnet restore ContinuousIntegration.slnx
 
     - name: Build
-      run: dotnet build ContinuousIntegration.sln --configuration Release --no-restore
+      run: dotnet build ContinuousIntegration.slnx --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test ContinuousIntegration.sln --no-build --verbosity normal
+      run: dotnet test ContinuousIntegration.slnx --no-build --verbosity normal
