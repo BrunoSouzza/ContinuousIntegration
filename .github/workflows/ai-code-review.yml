@@ -14,6 +14,7 @@ jobs:
   ai-review:
     name: Run AI code review
     runs-on: ubuntu-latest
+    environment: DEV
     if: ${{ !github.event.pull_request.draft }}  # pula PR em rascunho
 
     steps:
