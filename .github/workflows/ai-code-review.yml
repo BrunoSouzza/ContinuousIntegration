@@ -39,5 +39,13 @@ jobs:
           AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
           AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
           AZURE_OPENAI_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_DEPLOYMENT }}
+          # ---- Controles opcionais ----
+          SUGGEST_INLINE: "true"            # publica sugestões inline com Apply
+          ONLY_CONSOLIDATED: "false"        # também publica o review consolidado
+          MAX_INLINE_COMMENTS: "20"         # limite de comentários inline
+          EXCLUDE_GLOBS: "package-lock.json,yarn.lock,.snap"
+          APPLY_MODE: "suggestions"         # "suggestions" (padrão) ou "commit"
+          GIT_COMMIT_AUTHOR_NAME: "ai-review-bot"
+          GIT_COMMIT_AUTHOR_EMAIL: "ai-review-bot@users.noreply.github.com"
         run: |
           python .github/ai_review.py
