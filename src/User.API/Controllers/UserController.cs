@@ -65,24 +65,16 @@ namespace User.API.Controllers
         }
 
         [HttpGet("pega")]
-        public IActionResult PegaUsuario(string id)
+        public IActionResult PegaUsuario()
         {
-            // ❌ Conexão aberta sem using
-            var conn = new SqlConnection("Server=.;Database=App;Trusted_Connection=True;");
-            conn.Open();
+            bool hasName = false;
+            if (hasName)
+                return Ok("Nome já existe");
+            else
+                return Ok("Não tem nome");
 
-            // ❌ SQL Injection: concatenando direto
-            var cmd = new SqlCommand("SELECT * FROM Usuarios WHERE Id = " + id, conn);
-            var reader = cmd.ExecuteReader();
+            return Ok("Nome já existe");
 
-            if (!reader.HasRows)
-            {
-                return NotFound(); // sem log, sem detalhe
-            }
-
-            reader.Read();
-            // ❌ Retornando um objeto anônimo sem DTO
-            return Ok(new { Nome = reader["Nome"], Email = reader["Email"] });
         }
     }
 }
