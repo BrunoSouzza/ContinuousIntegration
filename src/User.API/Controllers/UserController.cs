@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using User.API.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
 
 namespace User.API.Controllers
 {
@@ -60,6 +62,27 @@ namespace User.API.Controllers
 
             users.Remove(user);
             return NoContent();
+        }
+
+        [HttpGet("pega")]
+        public IActionResult PegaUsuario(string id)
+        {
+            // ❌ Conexão aberta sem using
+            var conn = new SqlConnection("Server=.;Database=App;Trusted_Connection=True;");
+            conn.Open();
+
+            // ❌ SQL Injection: concatenando direto
+            var cmd = new SqlCommand("SELECT * FROM Usuarios WHERE Id = " + id, conn);
+            var reader = cmd.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                return NotFound(); // sem log, sem detalhe
+            }
+
+            reader.Read();
+            // ❌ Retornando um objeto anônimo sem DTO
+            return Ok(new { Nome = reader["Nome"], Email = reader["Email"] });
         }
     }
 }
