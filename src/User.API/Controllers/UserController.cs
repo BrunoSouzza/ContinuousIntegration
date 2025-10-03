@@ -73,7 +73,7 @@ namespace User.API.Controllers
             else
                 return Ok("Não tem nome");
 
-            return Ok("Nome já existe - 2");
+            return Ok("Nome já existe - 3");
 
         }
     }
