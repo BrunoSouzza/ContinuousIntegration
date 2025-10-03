@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using User.API.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
 
 namespace User.API.Controllers
 {
@@ -60,6 +62,19 @@ namespace User.API.Controllers
 
             users.Remove(user);
             return NoContent();
+        }
+
+        [HttpGet("pega")]
+        public IActionResult PegaUsuario()
+        {
+            bool hasName = false;
+            if (hasName)
+                return Ok("Nome já existe");
+            else
+                return Ok("Não tem nome");
+
+            return Ok("Nome já existe");
+
         }
     }
 }
