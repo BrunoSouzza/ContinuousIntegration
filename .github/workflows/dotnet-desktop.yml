@@ -27,5 +27,44 @@ jobs:
     - name: Build
       run: dotnet build ContinuousIntegration.slnx --configuration Release --no-restore
 
-    - name: Test
-      run: dotnet test
+    - name: Test with coverage
+      run: |
+        dotnet test ContinuousIntegration.slnx \
+          --configuration Release \
+          --no-build \
+          --verbosity normal \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ./coverage
+    - name: Install ReportGenerator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
+
+    - name: Check coverage threshold (95%)
+      shell: bash
+      run: |
+        # Gera relatório resumo em texto
+        reportgenerator \
+          -reports:"./coverage/**/coverage.cobertura.xml" \
+          -targetdir:"./coverage/temp" \
+          -reporttypes:"TextSummary"
+
+        echo "📋 Coverage Summary:"
+        cat ./coverage/temp/Summary.txt
+
+        # Extrai % de cobertura da linha "Line coverage"
+        COVERAGE=$(grep -oE "Line coverage: [0-9.]+" ./coverage/temp/Summary.txt | grep -oE "[0-9.]+" | head -1)
+
+        if [ -z "$COVERAGE" ]; then
+          echo "❌ Não foi possível determinar a cobertura de linha"
+          exit 1
+        fi
+
+        echo "📊 Cobertura encontrada: ${COVERAGE}%"
+        COV_INT=${COVERAGE%.*}
+
+        THRESHOLD=95
+        if [ "$COV_INT" -lt "$THRESHOLD" ]; then
+          echo "❌ Cobertura ${COVERAGE}% está abaixo do mínimo exigido ${THRESHOLD}%"
+          exit 1
+        else
+          echo "✅ Cobertura ${COVERAGE}% atende ao mínimo de ${THRESHOLD}%"
+        fi
