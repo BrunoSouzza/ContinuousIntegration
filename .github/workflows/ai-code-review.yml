@@ -48,4 +48,4 @@ jobs:
           GIT_COMMIT_AUTHOR_NAME: "ai-review-bot"
           GIT_COMMIT_AUTHOR_EMAIL: "ai-review-bot@users.noreply.github.com"
         run: |
-          python .github/workflows/ai_review.py
+          python .github/scripts/ai_review.py
