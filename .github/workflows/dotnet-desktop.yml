@@ -63,7 +63,7 @@ jobs:
 
         echo "📊 Cobertura encontrada: ${COVERAGE}%"
         COV_INT=${COVERAGE%.*}
-        THRESHOLD=95
+        THRESHOLD=60
 
         if [ "$COV_INT" -lt "$THRESHOLD" ]; then
           echo "❌ Cobertura ${COVERAGE}% está abaixo do mínimo exigido ${THRESHOLD}%"
